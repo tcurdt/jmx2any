@@ -1,0 +1,33 @@
+node:
+  id: test
+  delay: 1
+
+output:
+  ganglia:
+    address: 239.2.11.72
+    port: 8649
+    mode: MULTICAST
+    version: 31X
+    report:
+      - java
+      - cassandra
+
+cassandra:
+  url: "service:jmx:rmi:///jndi/rmi://localhost:7199/jmxrmi"
+  query: "org.apache.cassandra.*:*"
+  metrics:
+    org_apache_cassandra_internal_gossipstage_totalblockedtasks:
+    org_apache_cassandra_db_storageservice_operationmode:
+      enum:
+        0: ^NORMAL
+        1: ^PROBLEM
+    org_apache_cassandra_internal_gossipstage_currentlyblockedtasks:
+    org_apache_cassandra_internal_gossipstage_completedtasks:
+    org_apache_cassandra_internal_gossipstage_activecount:
+    org_apache_cassandra_internal_gossipstage_pendingtasks:
+
+java:
+  url: "service:jmx:rmi:///jndi/rmi://localhost:7199/jmxrmi"
+  query: "java.lang*:*"
+  metrics:
+    java_lang_memory_heapmemoryusage:
