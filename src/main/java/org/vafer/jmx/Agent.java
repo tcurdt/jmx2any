@@ -49,14 +49,13 @@ public final class Agent {
 
     public static void premain(String args, Instrumentation inst) {
         System.out.println("Starting jmx2any agent");
-        Agent agent = new Agent(args);
-        agent.start();
+        new Agent(args).start();
     }
 
-    public static void main(String[] args) throws Exception {
-        premain("/Users/tcurdt/Projects/jmx2any/config.yaml", null);
-        while(true) {
-            Thread.sleep(10*1000);
-        }
-    }
+//    public static void main(String[] args) throws Exception {
+//        premain("/Users/tcurdt/Projects/jmx2any/config.yaml", null);
+//        while(true) {
+//            Thread.sleep(10*1000);
+//        }
+//    }
 }

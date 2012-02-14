@@ -1,7 +1,9 @@
-package org.vafer.jmx.output;
+package org.vafer.jmx.pipe;
 
 import org.vafer.jmx.JmxQuery;
 import org.vafer.jmx.formatter.DefaultFormatter;
+import org.vafer.jmx.output.Enums;
+import org.vafer.jmx.output.Output;
 
 import java.io.IOException;
 import java.util.List;

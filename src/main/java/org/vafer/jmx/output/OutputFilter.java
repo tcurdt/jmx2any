@@ -2,6 +2,7 @@ package org.vafer.jmx.output;
 
 import org.vafer.jmx.JmxQuery;
 import org.vafer.jmx.formatter.DefaultFormatter;
+import org.vafer.jmx.pipe.JmxPipe;
 
 import javax.management.AttributeNotFoundException;
 import javax.management.InstanceNotFoundException;

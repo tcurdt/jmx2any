@@ -1,4 +1,4 @@
-package org.vafer.jmx.output;
+package org.vafer.jmx.pipe;
 
 import org.vafer.jmx.JmxQuery;
 
