@@ -1,5 +1,11 @@
 # jmx2any
 
+    java -javaagent:/path/jmx2any.jar=/etc/jmx2any.yml yourmainclass
+
+    java -jar /path/jmx2any.jar -config /etc/jmx2any.yml
+
+    jmx2any -config /etc/jmx2any.yml -print -all
+
 
 # License
 

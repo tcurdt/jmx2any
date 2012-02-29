@@ -15,7 +15,6 @@ output:
     path: /tmp/output
     report:
       - java
-      - cassandra
 
 cassandra:
   url: "service:jmx:rmi:///jndi/rmi://localhost:7199/jmxrmi"

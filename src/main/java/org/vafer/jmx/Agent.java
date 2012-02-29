@@ -6,11 +6,11 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 /*
-* java -javaagent:/path/jmx2any.jar=/etc/jmx2any.config yourmainclass
+* java -javaagent:/path/jmx2any.jar=/etc/jmx2any.yml yourmainclass
 */
 public final class Agent {
 
-    private final String filename;    
+    private final String filename;
     private final ScheduledThreadPoolExecutor executor;
 
     public Agent(String filename) {

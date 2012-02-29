@@ -21,7 +21,7 @@ import javax.management.openmbean.CompositeType;
 public final class ConverterPipe implements JmxPipe {
 
     private final static DefaultFormatter formatter = new DefaultFormatter();
-    
+
     private final Output output;
     private final Enums enums;
 

@@ -33,7 +33,6 @@ public final class CompositePipe implements JmxPipe {
         }
     }
 
-
     public void close() throws IOException {
         for(JmxPipe output : outputs) {
             output.close();

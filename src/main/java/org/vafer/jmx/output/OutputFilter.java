@@ -14,7 +14,7 @@ import java.util.Set;
 public final class OutputFilter implements JmxPipe {
 
     private final static DefaultFormatter formatter = new DefaultFormatter();
-    
+
     private final JmxPipe output;
     private final Set<String> metrics;
 

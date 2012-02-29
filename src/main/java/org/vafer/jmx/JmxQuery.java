@@ -31,8 +31,8 @@ public final class JmxQuery implements Iterable<JmxQuery.JmxBean> {
         public JmxBean(ObjectInstance mbean) throws IntrospectionException, InstanceNotFoundException, IOException, ReflectionException {
             final ObjectName mbeanName = mbean.getObjectName();
             final MBeanInfo mbeanInfo = connection.getMBeanInfo(mbeanName);
-            
-            final Collection<JmxAttribute> attributes = new ArrayList<JmxAttribute>();            
+
+            final Collection<JmxAttribute> attributes = new ArrayList<JmxAttribute>();
             for (final MBeanAttributeInfo attribute : mbeanInfo.getAttributes()) {
                 if (attribute.isReadable()) {
                     attributes.add(new JmxAttribute() {
@@ -60,7 +60,7 @@ public final class JmxQuery implements Iterable<JmxQuery.JmxBean> {
             return attributes.iterator();
         }
     }
-    
+
     public JmxQuery(final String url, final Set<String> expressions) throws IOException, MalformedObjectNameException, IntrospectionException, InstanceNotFoundException, ReflectionException {
         this.connector = JMXConnectorFactory.connect(new JMXServiceURL(url));
         this.connection = connector.getMBeanServerConnection();
