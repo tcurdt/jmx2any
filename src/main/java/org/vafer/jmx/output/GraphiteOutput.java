@@ -30,6 +30,7 @@ public final class GraphiteOutput implements Output {
     }
 
     public void output(String node, String key, Number value) throws IOException {
+        // System.out.println(node + "." + key + " = " + value);
         StringBuilder sb = new StringBuilder()
                 .append(node).append('.')
                 .append(key).append(' ')

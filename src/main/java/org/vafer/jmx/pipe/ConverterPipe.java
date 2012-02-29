@@ -36,8 +36,12 @@ public final class ConverterPipe implements JmxPipe {
 
     public void output(String node, JmxQuery.JmxAttribute metric) throws IOException, InstanceNotFoundException, AttributeNotFoundException, ReflectionException, MBeanException {
         final String attribute = formatter.attributeName(metric.getBeanName(), metric.getAttributeName());
-        final Object value = metric.getAttributeValue();
-        flatten(node, attribute, value);
+        try {
+            final Object value = metric.getAttributeValue();
+            flatten(node, attribute, value);
+        } catch(Exception e) {
+            System.err.println(String.format("Failed to read attribute %s [%s]", attribute, e.getMessage()));
+        }
     }
 
     private void flatten(String node, String attribute, Object value) throws IOException {
@@ -51,7 +55,7 @@ public final class ConverterPipe implements JmxPipe {
             if (v != null) {
                 output.output(node, attribute, v);
             } else {
-                System.err.println(String.format("Missing enum for %s [%s]", attribute, value));
+                System.err.println(String.format("Missing enum for attribute %s [%s]", attribute, value));
             }
 
         } else if (value instanceof Set) {

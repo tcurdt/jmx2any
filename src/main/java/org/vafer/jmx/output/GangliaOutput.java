@@ -37,20 +37,8 @@ public final class GangliaOutput implements Output {
     }
 
     public void output(String node, String key, Number value) throws IOException {
+        // System.out.println(node + "." + key + " = " + value);
         try {
-
-//        GMetric gm = new GMetric("239.2.11.72", 8649, GMetric.UDPAddressingMode.MULTICAST, true) ;
-//
-//        gm.announce(
-//                "TORSTEN",
-//                "1111",
-//                GMetricType.INT32,
-//                "UNITS",
-//                GMetricSlope.BOTH,
-//                600,
-//                1,
-//                "TESTGROUP");
-
             gm.announce(
                 key,
                 value.toString(),
@@ -61,7 +49,7 @@ public final class GangliaOutput implements Output {
                 1,
                 group);
         } catch (Exception e) {
-            throw new IOException("", e);
+            throw new IOException("Failed to announce value", e);
         }
     }
 

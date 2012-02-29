@@ -29,7 +29,18 @@ public final class Exporter {
         }
     }
 
-    public Config load(String configfile) throws Exception {
+    private int parseTimespan(String s) {
+        int unit = 0;
+        if (s.endsWith("ms")) {
+            unit = 1;
+        } else if (s.endsWith("s")) {
+            unit = 1000;
+        }
+        int n = Integer.parseInt(s.replaceAll("[^0-9]", ""));
+        return n * unit;
+    }
+    
+    public Config load(String configfile, boolean console, boolean all) throws Exception {
         Collection<JmxPipe> pipes = new ArrayList<JmxPipe>();
         Map<String, Set<String>> queriesByUrl = new TreeMap<String, Set<String>>();
 
@@ -37,8 +48,12 @@ public final class Exporter {
 
         Map<String,?> nodeMap = (Map) configMap.get("node");
         String node = (String) nodeMap.get("id");
-        Integer delay = (Integer) nodeMap.get("delay");
+        int delay = parseTimespan(String.valueOf(nodeMap.get("delay")));
 
+        if (delay <= 0) {
+            throw new Exception("Please specify a delay in s or ms");
+        }
+        
         Map<String,?> outputsMap = (Map) configMap.get("output");
         for(String key : outputsMap.keySet()) {
 
@@ -46,14 +61,20 @@ public final class Exporter {
             outputMap.put("type", key);
             outputMap.put("report", "report");
             outputMap.putAll((Map) outputsMap.get(key));
-            Output output = OutputFactory.createOutput(outputMap);
+
+            Output output;
+            if (console) {
+                output = new ConsoleOutput();
+            } else {
+                output = OutputFactory.createOutput(outputMap);
+            }
 
             Enums enums = new Enums();
             Set<String> metrics = new TreeSet<String>();
             Set<String> reports = flattenAsStringSet(outputMap, "report");
             for(String report : reports) {
                 Map reportMap = (Map) configMap.get(report);
-                if (reportMap == null) throw new Exception("No such report " + report);
+                if (reportMap == null) throw new Exception("No such report named \"" + report + "\"");
 
                 String url = String.valueOf(reportMap.get("url"));
                 Set<String> queries = queriesByUrl.get(url);
@@ -79,7 +100,12 @@ public final class Exporter {
                     }
                 }
             }
-            pipes.add(new OutputFilter(new ConverterPipe(output, enums), metrics));
+
+            if (all) {
+                pipes.add(new ConverterPipe(output, enums));
+            } else {
+                pipes.add(new OutputFilter(new ConverterPipe(output, enums), metrics));
+            }
         }
 
         return new Config(node, queriesByUrl, new CompositePipe(pipes), delay, delay);

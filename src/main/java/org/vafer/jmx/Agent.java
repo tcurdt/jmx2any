@@ -28,7 +28,7 @@ public final class Agent {
     public void start() {
         try {
             final Exporter exporter = new Exporter();
-            final Exporter.Config config = exporter.load(filename);
+            final Exporter.Config config = exporter.load(filename, false, false);
             executor.scheduleAtFixedRate(new Runnable() {
                 public void run() {
                     try {
@@ -37,7 +37,7 @@ public final class Agent {
                         System.err.println("jmx2any: " + e.getMessage());
                     }
                 }
-            }, config.initialDelay, config.repeatDelay, TimeUnit.SECONDS);
+            }, config.initialDelay, config.repeatDelay, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
             System.err.println("jmx2any: " + e.getMessage());
         }
@@ -53,7 +53,7 @@ public final class Agent {
     }
 
 //    public static void main(String[] args) throws Exception {
-//        premain("/Users/tcurdt/Projects/jmx2any/config.yaml", null);
+//        premain("/Users/tcurdt/Projects/jmx2any/src/examples/config.yaml", null);
 //        while(true) {
 //            Thread.sleep(10*1000);
 //        }

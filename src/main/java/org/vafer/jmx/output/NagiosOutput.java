@@ -10,6 +10,7 @@ public final class NagiosOutput implements Output {
     }
 
     public void output(String node, String key, Number value) {
+        // System.out.println(node + "." + key + " = " + value);
         // JMX OK ObjectPendingFinalizationCount=0
     }
 

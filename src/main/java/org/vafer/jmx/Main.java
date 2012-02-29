@@ -5,18 +5,18 @@ import com.beust.jcommander.Parameter;
 
 public final class Main {
 
-//    @Parameter(names = "-url", description = "jmx url")
-//    private String url = "service:jmx:rmi:///jndi/rmi://localhost:7199/jmxrmi";
-//
-//    @Parameter(names = "-query", description = "query")
-//    private String query = "";
-
     @Parameter(names = "-config", description = "path to config file", required = true)
-    private String configPath = "";
+    private String configPath = "/etc/jmx2any.yml";
+
+    @Parameter(names = "-print", description = "print to output")
+    private boolean print = false;
+
+    @Parameter(names = "-all", description = "do not filter")
+    private boolean all = false;
 
     private void run() throws Exception {
         Exporter exporter = new Exporter();
-        Exporter.Config config = exporter.load(configPath);
+        Exporter.Config config = exporter.load(configPath, print, all);
         exporter.output(config);
     }
 

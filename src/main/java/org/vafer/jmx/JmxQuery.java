@@ -36,6 +36,7 @@ public final class JmxQuery implements Iterable<JmxQuery.JmxBean> {
             for (final MBeanAttributeInfo attribute : mbeanInfo.getAttributes()) {
                 if (attribute.isReadable()) {
                     attributes.add(new JmxAttribute() {
+                        private Object value;
                         public ObjectName getBeanName() {
                             return mbeanName;
                         }
@@ -43,7 +44,11 @@ public final class JmxQuery implements Iterable<JmxQuery.JmxBean> {
                             return attribute.getName();
                         }
                         public Object getAttributeValue() throws InstanceNotFoundException, IOException, AttributeNotFoundException, ReflectionException, MBeanException {
-                            return connection.getAttribute(mbeanName, attribute.getName()); 
+                            if (value == null) {
+                                // System.out.println("> reading " + this.getAttributeName());
+                                value = connection.getAttribute(mbeanName, attribute.getName());
+                            }
+                            return value;
                         }
                     });
                 }

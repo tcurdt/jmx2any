@@ -1,0 +1,9 @@
+Package: [[name]]
+Version: [[version]]
+Section: misc
+Priority: optional
+Architecture: all
+Depends: sun-java6-jre | sun-java6-sdk
+Maintainer: Torsten Curdt <tcurdt@vafer.org>
+Description: push jmx values to various monitoring platforms
+Distribution: development

@@ -31,7 +31,8 @@ public final class OutputFactory {
 
         } else if ("file".equals(type)) {
 
-            return new FileOutput();
+            String filename = (String) config.get("path");
+            return new FileOutput(filename);
 
         } else {
 

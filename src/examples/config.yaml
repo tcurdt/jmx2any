@@ -1,13 +1,18 @@
 node:
   id: test
-  delay: 1
+  delay: 1s
 
 output:
   ganglia:
     address: 239.2.11.72
     port: 8649
     mode: MULTICAST
-    version: 31X
+    version: VERSION31X
+    report:
+      - java
+      - cassandra
+  file:
+    path: /tmp/output
     report:
       - java
       - cassandra

@@ -11,10 +11,10 @@ public final class ConsoleOutput implements Output {
     }
 
     public void output(String node, String key, Number value) throws IOException {
-        System.out.println(String.format("%s: %s = %d",
+        System.out.println(String.format("%s: %s = %s",
             node,
             key,
-            value
+            value.toString()
         ));
     }
     public void close() throws IOException {
