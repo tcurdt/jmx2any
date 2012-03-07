@@ -35,6 +35,8 @@ public final class Exporter {
             unit = 1;
         } else if (s.endsWith("s")) {
             unit = 1000;
+        } else if (s.endsWith("m")) {
+            unit = 60*1000;
         }
         int n = Integer.parseInt(s.replaceAll("[^0-9]", ""));
         return n * unit;
@@ -48,10 +50,10 @@ public final class Exporter {
 
         Map<String,?> nodeMap = (Map) configMap.get("node");
         String node = (String) nodeMap.get("id");
-        int delay = parseTimespan(String.valueOf(nodeMap.get("delay")));
+        int interval = parseTimespan(String.valueOf(nodeMap.get("interval")));
 
-        if (delay <= 0) {
-            throw new Exception("Please specify a delay in s or ms");
+        if (interval <= 0) {
+            throw new Exception("Please specify a interval in s or ms");
         }
         
         Map<String,?> outputsMap = (Map) configMap.get("output");
@@ -114,7 +116,7 @@ public final class Exporter {
             }
         }
 
-        return new Config(node, queriesByUrl, new CompositePipe(pipes), delay, delay);
+        return new Config(node, queriesByUrl, new CompositePipe(pipes), 0, interval);
     }
 
     public void output(Config config) throws Exception {
