@@ -23,10 +23,12 @@ public final class ConverterPipe implements JmxPipe {
     private final static DefaultFormatter formatter = new DefaultFormatter();
 
     private final Output output;
+    private final String prefix;
     private final Enums enums;
 
-    public ConverterPipe(Output output, Enums enums) {
+    public ConverterPipe(Output output, String prefix, Enums enums) {
         this.output = output;
+        this.prefix = prefix;
         this.enums = enums;
     }
 
@@ -38,7 +40,7 @@ public final class ConverterPipe implements JmxPipe {
         final String attribute = formatter.attributeName(metric.getBeanName(), metric.getAttributeName());
         try {
             final Object value = metric.getAttributeValue();
-            flatten(node, attribute, value);
+            flatten(node, prefix + attribute, value);
         } catch(Exception e) {
             System.err.println(String.format("Failed to read attribute %s [%s]", attribute, e.getMessage()));
         }

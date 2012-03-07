@@ -69,10 +69,11 @@ public final class Exporter {
                 output = OutputFactory.createOutput(outputMap);
             }
 
-            Enums enums = new Enums();
-            Set<String> metrics = new TreeSet<String>();
             Set<String> reports = flattenAsStringSet(outputMap, "report");
             for(String report : reports) {
+                Enums enums = new Enums();
+                Set<String> metrics = new HashSet<String>();
+
                 Map reportMap = (Map) configMap.get(report);
                 if (reportMap == null) throw new Exception("No such report named \"" + report + "\"");
 
@@ -84,6 +85,11 @@ public final class Exporter {
                 }
                 queries.addAll(flattenAsStringSet(reportMap, "query"));
 
+                String prefix = (String) reportMap.get("prefix");
+                if (prefix == null) {
+                    prefix = "";
+                }
+
                 Map metricsMap = (Map) reportMap.get("metrics");
                 metrics.addAll(metricsMap.keySet());
                 for(Object metric : metricsMap.keySet()) {
@@ -92,19 +98,19 @@ public final class Exporter {
                         Map enumsMap = (Map) metricMap.get("enum");
                         for(Object replacement : enumsMap.keySet()) {
                             enums.setMapping(
-                                    String.valueOf(metric),
+                                    prefix + String.valueOf(metric),
                                     Pattern.compile(String.valueOf(enumsMap.get(replacement))),
                                     Integer.parseInt(String.valueOf(replacement))
                             );
                         }
                     }
                 }
-            }
 
-            if (all) {
-                pipes.add(new ConverterPipe(output, enums));
-            } else {
-                pipes.add(new OutputFilter(new ConverterPipe(output, enums), metrics));
+                if (all) {
+                    pipes.add(new ConverterPipe(output, prefix, enums));
+                } else {
+                    pipes.add(new OutputFilter(new ConverterPipe(output, prefix, enums), metrics));
+                }
             }
         }
 
