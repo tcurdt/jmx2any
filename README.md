@@ -4,7 +4,7 @@
 
     java -jar /path/jmx2any.jar -config /etc/jmx2any.yml
 
-    jmx2any -config /etc/jmx2any.yml -print -all
+    jmx2any -config /etc/jmx2any.yml -console -all
 
 
 # License
