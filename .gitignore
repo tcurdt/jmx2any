@@ -6,6 +6,5 @@ Rakefile
 target
 eclipse
 old
-bin
 .idea
 *.iml

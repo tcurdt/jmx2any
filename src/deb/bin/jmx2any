@@ -1,0 +1,4 @@
+#!/bin/sh
+
+java -jar /usr/share/jmx2any/jmx2any-*.jar \
+  org.vafer.jmx2any.Main $*
