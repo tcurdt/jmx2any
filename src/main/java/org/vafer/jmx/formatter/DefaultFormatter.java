@@ -9,7 +9,7 @@ import java.util.Locale;
 public final class DefaultFormatter {
 
     private static String fieldname(String s) {
-        return s.replaceAll("[^A-Za-z0-9]", "_").replaceAll("_+", "_").replaceAll("_$", "");
+        return s.replaceAll("[^A-Za-z0-9]", "_").replaceAll("_$", "");
     }
 
     private static String beanString(ObjectName beanName) {
